@@ -1,0 +1,44 @@
+USE mavenmoviesmini;
+
+SELECT * FROM inventory_non_normalized;
+
+-- Inventory (inventory_id, film_id, store_id)
+-- Film (film_id, title, description, release_year, rental_rate, rating)
+-- Store (store_id, store_manager_first_name, store_manager_last_name, store_address, store_city, store_district)
+
+CREATE SCHEMA mavenmoviesmini_normalized;
+
+USE mavenmoviesmini_normalized;
+
+CREATE TABLE inventory (
+inventory_id BIGINT NOT NULL, 
+film_id SMALLINT NOT NULL, 
+store_id TINYINT NOT NULL)
+SELECT DISTINCT inventory_id, film_id, store_id
+FROM mavenmoviesmini.inventory_non_normalized;
+
+SELECT * FROM inventory;
+
+CREATE TABLE film (
+film_id SMALLINT NOT NULL, 
+title VARCHAR (255) NOT NULL,
+description TEXT NULL, 
+release_year YEAR NULL, 
+rental_rate DECIMAL(4,2), 
+rating ENUM ('G', 'PG', 'PG-13', 'R', 'NC-17'))
+SELECT DISTINCT film_id, title, description, release_year, rental_rate, rating
+FROM mavenmoviesmini.inventory_non_normalized;
+
+SELECT * FROM film;
+
+CREATE TABLE Store (
+store_id TINYINT NOT NULL, 
+store_manager_first_name VARCHAR(45) NOT NULL, 
+store_manager_last_name VARCHAR(45) NOT NULL, 
+store_address VARCHAR(45) NOT NULL, 
+store_city VARCHAR(45) NOT NULL, 
+store_district VARCHAR(45) NOT NULL)
+SELECT DISTINCT store_id, store_manager_first_name, store_manager_last_name, store_address, store_city, store_district
+FROM mavenmoviesmini.inventory_non_normalized;
+
+SELECT * FROM store;
